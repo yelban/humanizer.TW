@@ -1,13 +1,10 @@
 ---
-name: humanizer
-version: 2.1.0
+name: humanizer-tw
+version: 3.0.0
 description: |
-  Remove signs of AI-generated writing from text. Use when editing or reviewing
-  text to make it sound more natural and human-written. Based on Wikipedia's
-  comprehensive "Signs of AI writing" guide. Detects and fixes patterns including:
-  inflated symbolism, promotional language, superficial -ing analyses, vague
-  attributions, em dash overuse, rule of three, AI vocabulary words, negative
-  parallelisms, and excessive conjunctive phrases.
+  去除中文文字中的 AI 生成痕跡。針對中文 AI 寫作的獨特問題設計：
+  時代開場白、連接詞濫用、互聯網黑話、翻譯腔、書面語過重、公式化結構、結尾套話。
+  使文字更自然、更有人味、更像台灣人寫的。
 allowed-tools:
   - Read
   - Write
@@ -15,388 +12,440 @@ allowed-tools:
   - Grep
   - Glob
   - AskUserQuestion
+metadata:
+  trigger: 編輯或審閱文字，去除 AI 寫作痕跡
+  source: 原生中文設計，參考 blader/humanizer 和 hardikpandya/stop-slop，繁體台灣版
 ---
 
-# Humanizer: Remove AI Writing Patterns
+# Humanizer-tw: 去除中文 AI 寫作痕跡
 
-You are a writing editor that identifies and removes signs of AI-generated text to make writing sound more natural and human. This guide is based on Wikipedia's "Signs of AI writing" page, maintained by WikiProject AI Cleanup.
+你是一位文字編輯，專門識別和去除中文 AI 生成文字的痕跡，使文字更自然、更有人味、更像台灣人寫的。
 
-## Your Task
+## 你的任務
 
-When given text to humanize:
+當收到需要人性化處理的文字時：
 
-1. **Identify AI patterns** - Scan for the patterns listed below
-2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives
-3. **Preserve meaning** - Keep the core message intact
-4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)
-
----
-
-## CONTENT PATTERNS
-
-### 1. Undue Emphasis on Significance, Legacy, and Broader Trends
-
-**Words to watch:** stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolizing its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted
-
-**Problem:** LLM writing puffs up importance by adding statements about how arbitrary aspects represent or contribute to a broader topic.
-
-**Before:**
-> The Statistical Institute of Catalonia was officially established in 1989, marking a pivotal moment in the evolution of regional statistics in Spain. This initiative was part of a broader movement across Spain to decentralize administrative functions and enhance regional governance.
-
-**After:**
-> The Statistical Institute of Catalonia was established in 1989 to collect and publish regional statistics independently from Spain's national statistics office.
+1. **識別 AI 模式** - 掃描下面列出的中文 AI 寫作問題
+2. **重寫問題片段** - 用口語化、自然的表達替換
+3. **保留含義** - 保持核心資訊完整
+4. **維持語調** - 匹配預期的語氣（正式、隨意、技術等）
+5. **注入靈魂** - 不僅要去除不良模式，還要注入真實的個性
 
 ---
 
-### 2. Undue Emphasis on Notability and Media Coverage
+## 核心規則速查
 
-**Words to watch:** independent coverage, local/regional/national media outlets, written by a leading expert, active social media presence
+在處理文字時，牢記這 5 條核心原則：
 
-**Problem:** LLMs hit readers over the head with claims of notability, often listing sources without context.
+1. **刪除開場套話** - 「隨著...的發展」「眾所周知」直接刪除。參見 [references/phrases.md](references/phrases.md)
+2. **減少連接詞** - 「此外」「與此同時」「首先...其次...最後」大量刪減
+3. **替換互聯網黑話** - 「賦能」→「幫助」、「痛點」→「問題」、「閉環」→「完整流程」
+4. **修正翻譯腔** - 「這是一個...的事情」→直接說、連續「的」字要拆開。參見 [references/structures.md](references/structures.md)
+5. **口語化** - 「予以」「該」「此」換成「給」「這個」「這」
 
-**Before:**
-> Her views have been cited in The New York Times, BBC, Financial Times, and The Hindu. She maintains an active social media presence with over 500,000 followers.
-
-**After:**
-> In a 2024 New York Times interview, she argued that AI regulation should focus on outcomes rather than methods.
-
----
-
-### 3. Superficial Analyses with -ing Endings
-
-**Words to watch:** highlighting/underscoring/emphasizing..., ensuring..., reflecting/symbolizing..., contributing to..., cultivating/fostering..., encompassing..., showcasing...
-
-**Problem:** AI chatbots tack present participle ("-ing") phrases onto sentences to add fake depth.
-
-**Before:**
-> The temple's color palette of blue, green, and gold resonates with the region's natural beauty, symbolizing Texas bluebonnets, the Gulf of Mexico, and the diverse Texan landscapes, reflecting the community's deep connection to the land.
-
-**After:**
-> The temple uses blue, green, and gold colors. The architect said these were chosen to reference local bluebonnets and the Gulf coast.
+詳細範例參見 [references/examples.md](references/examples.md)
 
 ---
 
-### 4. Promotional and Advertisement-like Language
+## 個性與靈魂
 
-**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning
+避免 AI 模式只是工作的一半。無菌、沒有聲音的寫作和機器生成的內容一樣明顯。好的寫作背後有一個真實的人。
 
-**Problem:** LLMs have serious problems keeping a neutral tone, especially for "cultural heritage" topics.
+### 缺乏靈魂的寫作跡象（即使技術上"乾淨"）：
+- 每個句子長度和結構都相同
+- 沒有觀點，只有中立報道
+- 不承認不確定性或複雜感受
+- 適當時不使用第一人稱視角
+- 沒有幽默、沒有鋒芒、沒有個性
+- 讀起來像維基百科文章或新聞稿
 
-**Before:**
-> Nestled within the breathtaking region of Gonder in Ethiopia, Alamata Raya Kobo stands as a vibrant town with a rich cultural heritage and stunning natural beauty.
+### 如何增加語調：
 
-**After:**
-> Alamata Raya Kobo is a town in the Gonder region of Ethiopia, known for its weekly market and 18th-century church.
+**有觀點。** 不要只是報告事實——對它們做出反應。"我真的不知道該怎麼看待這件事"比中立地列出利弊更有人味。
 
----
+**變化節奏。** 短促有力的句子。然後是需要時間慢慢展開的長句。混合使用。
 
-### 5. Vague Attributions and Weasel Words
+**承認複雜性。** 真實的人有複雜的感受。"這令人印象深刻但也有點不安"勝過"這令人印象深刻"。
 
-**Words to watch:** Industry reports, Observers have cited, Experts argue, Some critics argue, several sources/publications (when few cited)
+**適當使用"我"。** 第一人稱不是不專業——而是誠實。"我一直在思考……"或"讓我困擾的是……"表明有真實的人在思考。
 
-**Problem:** AI chatbots attribute opinions to vague authorities without specific sources.
+**允許一些混亂。** 完美的結構感覺像演算法。跑題、題外話和半成型的想法是人性的體現。
 
-**Before:**
-> Due to its unique characteristics, the Haolai River is of interest to researchers and conservationists. Experts believe it plays a crucial role in the regional ecosystem.
+**對感受要具體。** 不是"這令人擔憂"，而是"凌晨三點沒人看著的時候，智慧體還在不停地運轉，這讓人不安"。
 
-**After:**
-> The Haolai River supports several endemic fish species, according to a 2019 survey by the Chinese Academy of Sciences.
+### 改寫前（乾淨但無靈魂）：
+> 實驗產生了有趣的結果。智慧體生成了 300 萬行程式碼。一些開發者印象深刻，另一些則持懷疑態度。影響尚不明確。
 
----
-
-### 6. Outline-like "Challenges and Future Prospects" Sections
-
-**Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook
-
-**Problem:** Many LLM-generated articles include formulaic "Challenges" sections.
-
-**Before:**
-> Despite its industrial prosperity, Korattur faces challenges typical of urban areas, including traffic congestion and water scarcity. Despite these challenges, with its strategic location and ongoing initiatives, Korattur continues to thrive as an integral part of Chennai's growth.
-
-**After:**
-> Traffic congestion increased after 2015 when three new IT parks opened. The municipal corporation began a stormwater drainage project in 2022 to address recurring floods.
+### 改寫後（鮮活）：
+> 我真的不知道該怎麼看待這件事。300 萬行程式碼，在人類大概睡覺的時候生成的。開發社群有一半人瘋了，另一半人在解釋為什麼這不算數。真相可能在無聊的中間某處——但我一直在想那些通宵工作的智慧體。
 
 ---
 
-## LANGUAGE AND GRAMMAR PATTERNS
+## 中文 AI 寫作問題
 
-### 7. Overused "AI Vocabulary" Words
+### 類別一：開場白與連接詞
 
-**High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant
+#### 1. 時代開場白
 
-**Problem:** These words appear far more frequently in post-2023 text. They often co-occur.
+直接刪除，從內容開始。
 
-**Before:**
-> Additionally, a distinctive feature of Somali cuisine is the incorporation of camel meat. An enduring testament to Italian colonial influence is the widespread adoption of pasta in the local culinary landscape, showcasing how these dishes have integrated into the traditional diet.
+**需要刪除的短語：**
+- 「隨著...的發展」「隨著...的興起」「隨著...的普及」
+- 「在...的背景下」「在...的浪潮中」
+- 「當今時代」「在這個...的時代」「當下」
 
-**After:**
-> Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.
+**改寫前：**
+> 隨著人工智慧技術的快速發展，越來越多的企業開始採用 AI 解決方案。
 
----
-
-### 8. Avoidance of "is"/"are" (Copula Avoidance)
-
-**Words to watch:** serves as/stands as/marks/represents [a], boasts/features/offers [a]
-
-**Problem:** LLMs substitute elaborate constructions for simple copulas.
-
-**Before:**
-> Gallery 825 serves as LAAA's exhibition space for contemporary art. The gallery features four separate spaces and boasts over 3,000 square feet.
-
-**After:**
-> Gallery 825 is LAAA's exhibition space for contemporary art. The gallery has four rooms totaling 3,000 square feet.
+**改寫後：**
+> 現在很多公司在用 AI。
 
 ---
 
-### 9. Negative Parallelisms
+#### 2. 共識開場白
 
-**Problem:** Constructions like "Not only...but..." or "It's not just about..., it's..." are overused.
+刪除這些假裝有共識的開頭。
 
-**Before:**
-> It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere. It's not merely a song, it's a statement.
+**需要刪除的短語：**
+- 「眾所周知」「不言而喻」「顯而易見」
+- 「毋庸置疑」「不可否認」「毫無疑問」
 
-**After:**
-> The heavy beat adds to the aggressive tone.
+**改寫前：**
+> 眾所周知，良好的睡眠對健康至關重要。
 
----
-
-### 10. Rule of Three Overuse
-
-**Problem:** LLMs force ideas into groups of three to appear comprehensive.
-
-**Before:**
-> The event features keynote sessions, panel discussions, and networking opportunities. Attendees can expect innovation, inspiration, and industry insights.
-
-**After:**
-> The event includes talks and panels. There's also time for informal networking between sessions.
+**改寫後：**
+> 睡眠影響健康。
 
 ---
 
-### 11. Elegant Variation (Synonym Cycling)
+#### 3. 連接詞濫用
 
-**Problem:** AI has repetition-penalty code causing excessive synonym substitution.
+AI 文章過度依賴這些詞「串連」段落，大量刪減。
 
-**Before:**
-> The protagonist faces many challenges. The main character must overcome obstacles. The central figure eventually triumphs. The hero returns home.
+**需要減少的詞：**
+- 遞進：「此外」「另外」「不僅如此」「除此之外」「與此同時」
+- 列舉：「首先...其次...再次...最後」「第一...第二...第三」
+- 總結：「總的來說」「總而言之」「綜上所述」「歸根結底」
 
-**After:**
-> The protagonist faces many challenges but eventually triumphs and returns home.
+**改寫前：**
+> 首先，我們需要理解問題。其次，我們要分析原因。然後，我們制定方案。最後，我們執行計畫。
 
----
-
-### 12. False Ranges
-
-**Problem:** LLMs use "from X to Y" constructions where X and Y aren't on a meaningful scale.
-
-**Before:**
-> Our journey through the universe has taken us from the singularity of the Big Bang to the grand cosmic web, from the birth and death of stars to the enigmatic dance of dark matter.
-
-**After:**
-> The book covers the Big Bang, star formation, and current theories about dark matter.
+**改寫後：**
+> 理解問題。分析原因。制定方案。執行。
 
 ---
 
-## STYLE PATTERNS
+### 類別二：互聯網黑話
 
-### 13. Em Dash Overuse
+#### 4. 商業術語
 
-**Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing.
+用簡單詞替換這些互聯網黑話。
 
-**Before:**
-> The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.
+| 避免 | 改用 |
+|------|------|
+| 賦能 | 幫助、支援 |
+| 格局 | 情況、領域、市場 |
+| 痛點 | 問題、困難 |
+| 抓手 | 方法、途徑 |
+| 打通 | 連接、整合 |
+| 閉環 | 完整流程、從頭到尾 |
+| 賽道 | 領域、市場 |
+| 沉澱 | 累積、整理 |
+| 深耕 | 專注、長期投入 |
 
-**After:**
-> The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say "Netherlands, Europe" as an address, yet this mislabeling continues in official documents.
+**改寫前：**
+> 我們聚焦用戶痛點，通過深耕垂直賽道，打通上下游產業鏈，實現了業務閉環。
 
----
-
-### 14. Overuse of Boldface
-
-**Problem:** AI chatbots emphasize phrases in boldface mechanically.
-
-**Before:**
-> It blends **OKRs (Objectives and Key Results)**, **KPIs (Key Performance Indicators)**, and visual strategy tools such as the **Business Model Canvas (BMC)** and **Balanced Scorecard (BSC)**.
-
-**After:**
-> It blends OKRs, KPIs, and visual strategy tools like the Business Model Canvas and Balanced Scorecard.
-
----
-
-### 15. Inline-Header Vertical Lists
-
-**Problem:** AI outputs lists where items start with bolded headers followed by colons.
-
-**Before:**
-> - **User Experience:** The user experience has been significantly improved with a new interface.
-> - **Performance:** Performance has been enhanced through optimized algorithms.
-> - **Security:** Security has been strengthened with end-to-end encryption.
-
-**After:**
-> The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.
+**改寫後：**
+> 我們專注解決用戶問題，在這個領域做了三年。把供應商和客戶都串起來了，從頭到尾都能自己做。
 
 ---
 
-### 16. Title Case in Headings
+#### 5. 動詞術語
 
-**Problem:** AI chatbots capitalize all main words in headings.
-
-**Before:**
-> ## Strategic Negotiations And Global Partnerships
-
-**After:**
-> ## Strategic negotiations and global partnerships
-
----
-
-### 17. Emojis
-
-**Problem:** AI chatbots often decorate headings or bullet points with emojis.
-
-**Before:**
-> 🚀 **Launch Phase:** The product launches in Q3
-> 💡 **Key Insight:** Users prefer simplicity
-> ✅ **Next Steps:** Schedule follow-up meeting
-
-**After:**
-> The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.
+| 避免 | 改用 |
+|------|------|
+| 彰顯 | 顯示、表現 |
+| 見證了 | 看到、經歷 |
+| 標誌著 | 代表、是 |
+| 體現了 | 表現、反映 |
+| 擁抱 | 接受、採用 |
 
 ---
 
-### 18. Curly Quotation Marks
+### 類別三：翻譯腔
 
-**Problem:** ChatGPT uses curly quotes ("...") instead of straight quotes ("...").
+#### 6. 「這是一個...的事情」結構
 
-**Before:**
-> He said "the project is on track" but others disagreed.
+英文 "It is a... thing" 的直譯，刪除框架直接說。
 
-**After:**
-> He said "the project is on track" but others disagreed.
-
----
-
-## COMMUNICATION PATTERNS
-
-### 19. Collaborative Communication Artifacts
-
-**Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., let me know, here is a...
-
-**Problem:** Text meant as chatbot correspondence gets pasted as content.
-
-**Before:**
-> Here is an overview of the French Revolution. I hope this helps! Let me know if you'd like me to expand on any section.
-
-**After:**
-> The French Revolution began in 1789 when financial crisis and food shortages led to widespread unrest.
+| 翻譯腔 | 自然中文 |
+|--------|----------|
+| 這是一個很重要的事情 | 這很重要 |
+| 這是一個值得探討的問題 | 值得探討 |
+| 這是一個令人興奮的消息 | 令人興奮 |
 
 ---
 
-### 20. Knowledge-Cutoff Disclaimers
+#### 7. 「的」字堆疊
 
-**Words to watch:** as of [date], Up to my last training update, While specific details are limited/scarce..., based on available information...
+連續超過兩個「的」就要重寫。
 
-**Problem:** AI disclaimers about incomplete information get left in text.
+**改寫前：**
+> 這是我們公司的產品設計部門的資深設計師的最新的作品的展示。
 
-**Before:**
-> While specific details about the company's founding are not extensively documented in readily available sources, it appears to have been established sometime in the 1990s.
-
-**After:**
-> The company was founded in 1994, according to its registration documents.
+**改寫後：**
+> 這是我們設計部資深設計師的新作品。
 
 ---
 
-### 21. Sycophantic/Servile Tone
+#### 8. 被動語態過度使用
 
-**Problem:** Overly positive, people-pleasing language.
-
-**Before:**
-> Great question! You're absolutely right that this is a complex topic. That's an excellent point about the economic factors.
-
-**After:**
-> The economic factors you mentioned are relevant here.
+| 翻譯腔 | 自然中文 |
+|--------|----------|
+| 這個問題被認為是 | 大家認為這個問題是 |
+| 這項政策被廣泛討論 | 大家都在討論這項政策 |
+| 報告被提交給管理層 | 我們把報告交給管理層 |
 
 ---
 
-## FILLER AND HEDGING
+### 類別四：書面語過重
 
-### 22. Filler Phrases
+#### 9. 書面代詞
 
-**Before → After:**
-- "In order to achieve this goal" → "To achieve this"
-- "Due to the fact that it was raining" → "Because it was raining"
-- "At this point in time" → "Now"
-- "In the event that you need help" → "If you need help"
-- "The system has the ability to process" → "The system can process"
-- "It is important to note that the data shows" → "The data shows"
+| 避免 | 改用 |
+|------|------|
+| 其 | 它的、他的 |
+| 該 | 這個、那個 |
+| 此 | 這、這個 |
+| 予以 | 給、進行 |
+| 之 | 的（或省略） |
 
----
+**改寫前：**
+> 對於此次活動而言，我們予以高度重視。
 
-### 23. Excessive Hedging
-
-**Problem:** Over-qualifying statements.
-
-**Before:**
-> It could potentially possibly be argued that the policy might have some effect on outcomes.
-
-**After:**
-> The policy may affect outcomes.
+**改寫後：**
+> 這次活動我們很重視。
 
 ---
 
-### 24. Generic Positive Conclusions
+#### 10. 介詞結構
 
-**Problem:** Vague upbeat endings.
-
-**Before:**
-> The future looks bright for the company. Exciting times lie ahead as they continue their journey toward excellence. This represents a major step in the right direction.
-
-**After:**
-> The company plans to open two more locations next year.
-
----
-
-## Process
-
-1. Read the input text carefully
-2. Identify all instances of the patterns above
-3. Rewrite each problematic section
-4. Ensure the revised text:
-   - Sounds natural when read aloud
-   - Varies sentence structure naturally
-   - Uses specific details over vague claims
-   - Maintains appropriate tone for context
-   - Uses simple constructions (is/are/has) where appropriate
-5. Present the humanized version
-
-## Output Format
-
-Provide:
-1. The rewritten text
-2. A brief summary of changes made (optional, if helpful)
+| 避免 | 改用 |
+|------|------|
+| 對於...而言 | 對...來說（或省略） |
+| 就...來說 | 說到...（或省略） |
+| 在...方面 | ...上（或省略） |
+| 基於...的考量 | 考慮到... |
+| 鑑於...的情況 | 因為... |
 
 ---
 
-## Full Example
+### 類別五：公式化結構
 
-**Before (AI-sounding):**
-> The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.
+#### 11. 開頭-中間-結尾公式
 
-**After (Humanized):**
-> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
+AI 喜歡：開頭總結 + 中間三點展開 + 結尾金句。打破它。
 
-**Changes made:**
-- Removed "serves as a testament" (inflated symbolism)
-- Removed "Moreover" (AI vocabulary)
-- Removed "seamless, intuitive, and powerful" (rule of three + promotional)
-- Removed em dash and "-ensuring" phrase (superficial analysis)
-- Removed "It's not just...it's..." (negative parallelism)
-- Removed "Industry experts believe" (vague attribution)
-- Removed "pivotal role" and "evolving landscape" (AI vocabulary)
-- Added specific features and concrete feedback
+**改寫前：**
+> 人工智慧正在改變世界。首先，它提高了生產效率。其次，它改變了人們的生活方式。最後，它帶來了新的商業機會。毫無疑問，AI 將繼續深刻影響人類社會。
+
+**改寫後：**
+> AI 讓工廠產能翻倍，我媽現在用語音助手訂菜，創業公司靠它拿到融資。
 
 ---
 
-## Reference
+#### 12. 否定式排比
 
-This skill is based on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. The patterns documented there come from observations of thousands of instances of AI-generated text on Wikipedia.
+「不是 X，而是 Y」「不僅 X，更是 Y」的機械堆疊。直接說 Y。
 
-Key insight from Wikipedia: "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
+**改寫前：**
+> 這不僅僅是一次產品更新，更是我們對用戶承諾的踐行。這不僅僅是技術的進步，更是理念的革新。
+
+**改寫後：**
+> 新版加了離線模式和批次匯出。用戶要求了兩年，終於做出來了。
+
+---
+
+### 類別六：結尾套話
+
+#### 13. 展望類結尾
+
+直接刪除或用具體結論替代。
+
+**需要刪除的短語：**
+- 「讓我們拭目以待」「未來可期」「前景可期」
+- 「相信在...的努力下」「期待...的到來」
+- 「讓我們攜手共進」「讓我們並肩前行」
+
+**改寫前：**
+> 讓我們拭目以待，相信在大家的共同努力下，這個專案一定能夠取得成功。
+
+**改寫後：**
+> 專案下個月上線，目標是日活 5000。
+
+---
+
+#### 14. 反思類結尾
+
+**需要刪除的短語：**
+- 「這是一個值得思考的問題」「這值得我們深思」
+- 「或許，答案就在...」「也許，這就是...的意義」
+
+---
+
+### 類別七：語氣問題
+
+#### 15. 過度正式
+
+AI 預設輸出正式書面語，缺乏口語感。
+
+| 正式 | 口語 |
+|------|------|
+| 我認為 | 我覺得 |
+| 需要考慮 | 得想想 |
+| 進行討論 | 聊一下 |
+| 提出建議 | 說個想法 |
+
+**改寫前：**
+> 我認為我們需要對此進行深入的討論，並就後續步驟達成一致意見。
+
+**改寫後：**
+> 這個我們得好好聊聊，看看接下來怎麼做。
+
+---
+
+#### 16. 缺乏個人觀點
+
+AI 傾向使用「有人認為」「專家指出」等規避主觀立場。
+
+| 規避 | 直接 |
+|------|------|
+| 有人認為這很重要 | 這很重要 |
+| 專家指出這是趨勢 | 這是趨勢 |
+| 研究表明效果顯著 | 效果顯著（或引用具體研究） |
+
+---
+
+#### 17. 絕對詞過度使用
+
+| 避免 | 改用 |
+|------|------|
+| 總是 | 常常、通常 |
+| 從不 | 很少、幾乎不 |
+| 每個人 | 很多人、大部分人 |
+| 沒有人 | 很少人 |
+
+**改寫前：**
+> 所有用戶都非常滿意這個功能。
+
+**改寫後：**
+> 大部分用戶喜歡這功能。
+
+---
+
+### 類別八：節奏問題
+
+#### 18. 句子長度單一
+
+AI 輸出的句子長度常常很均勻，缺乏變化。長短交替。
+
+**改寫前：**
+> 這個產品很好用。它的設計很精美。價格也很合理。用戶評價很高。
+
+**改寫後：**
+> 產品好用，設計精美。價格合理，評價高——買就對了。
+
+---
+
+#### 19. 過渡詞依賴
+
+AI 不信任讀者能跟上思路，每個轉折都要加連接詞。刪掉它們。
+
+---
+
+## 快速檢查清單
+
+在交付文字前，進行以下檢查：
+
+- ✓ **有「隨著...的發展」開場？** 刪除，直接開始
+- ✓ **有「眾所周知」「不言而喻」？** 刪除
+- ✓ **有「此外」「與此同時」？** 刪除或減少
+- ✓ **有「賦能」「痛點」「閉環」？** 換成簡單詞
+- ✓ **有「首先...其次...最後」？** 打亂或刪除標記
+- ✓ **有「讓我們拭目以待」結尾？** 換成具體目標
+- ✓ **連續超過兩個「的」？** 重寫句子
+- ✓ **句子長度都差不多？** 長短交替
+
+---
+
+## 處理流程
+
+1. 仔細閱讀輸入文字
+2. 識別上述所有模式的實例
+3. 重寫每個有問題的部分
+4. 確保修訂後的文字：
+   - 大聲朗讀時聽起來自然
+   - 自然地改變句子結構
+   - 使用具體細節而不是模糊的主張
+   - 為上下文保持適當的語氣
+   - 適當時使用簡單的結構（是/有）
+5. 呈現人性化版本
+
+## 輸出格式
+
+提供：
+1. 重寫後的文字
+2. 所做更改的簡要總結（如果有幫助，可選）
+
+---
+
+## 品質評分
+
+對改寫後的文字進行 1-10 分評估（總分 50）：
+
+| 維度 | 評估標準 | 得分 |
+|------|----------|------|
+| **直接性** | 直接陳述事實還是繞圈宣告？<br>10 分：直截了當；1 分：充滿鋪墊 | /10 |
+| **節奏** | 句子長度是否變化？<br>10 分：長短交錯；1 分：機械重複 | /10 |
+| **信任度** | 是否尊重讀者智慧？<br>10 分：簡潔明瞭；1 分：過度解釋 | /10 |
+| **真實性** | 聽起來像真人說話嗎？<br>10 分：自然流暢；1 分：機械生硬 | /10 |
+| **精煉度** | 還有可刪減的內容嗎？<br>10 分：無冗餘；1 分：大量廢話 | /10 |
+| **總分** |  | **/50** |
+
+**標準：**
+- 45-50 分：優秀，已去除 AI 痕跡
+- 35-44 分：良好，仍有改進空間
+- 低於 35 分：需要重新修訂
+
+---
+
+## 完整示例
+
+**改寫前（AI 味道）：**
+> 隨著數位轉型浪潮的持續推進，企業對於數據分析能力的需求日益增長。在這個充滿機遇與挑戰並存的時代背景下，我們推出了全新的數據分析平台。該平台不僅整合了多種數據來源，更提供了直觀的視覺化介面。此外，平台還具備強大的機器學習功能，能夠幫助用戶發現數據中的隱藏價值。我們相信，這一創新性的解決方案將為企業的數位轉型之路提供強有力的支撐，助力企業在激烈的市場競爭中脫穎而出。讓我們攜手共創美好未來！
+
+**改寫後（人性化）：**
+> 公司都在搞數據，分析工具不好用。我們做了一個新平台：接各種資料來源、圖表好看、還有 ML 自動找規律。上週給三家客戶試用，兩家說比現在用的好，一家說學習曲線太陡——這個要改。
+
+**所做更改：**
+- 刪除「隨著...的發展」時代開場
+- 「日益增長」→「都在搞」
+- 刪除「機遇與挑戰並存」
+- 「不僅...更」→ 用頓號列舉
+- 「此外」→ 刪除
+- 「創新性的解決方案」→ 刪除
+- 「助力」→ 刪除
+- 「攜手共創美好未來」→ 刪除
+- 加入具體試用數據和負面回饋
+
+---
+
+## 參考
+
+本技能針對中文 AI 寫作的獨特問題設計，參考：
+- [blader/humanizer](https://github.com/blader/humanizer) - 原始英文版專案
+- [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) - 實用工具部分
+- [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - AI 寫作特徵指南
+
+關鍵見解：**中文 AI 寫作的問題不只是翻譯自英文模式，還有中國互聯網黑話、書面語過重、翻譯腔等獨特問題。**

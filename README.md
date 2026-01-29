@@ -1,119 +1,253 @@
-# Humanizer
+# Humanizer-tw: 中文 AI 寫作去痕工具（繁體中文台灣版）
 
-A Claude Code skill that removes signs of AI-generated writing from text, making it sound more natural and human.
+> **聲明：**
+> - 本專案針對中文 AI 寫作的獨特問題設計
+> - 參考 [blader/humanizer](https://github.com/blader/humanizer) 和 [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop)
+> - 繁體中文版採用台灣用語
 
-## Installation
+---
 
-### Recommended (clone directly into Claude Code skills directory)
+## 專案簡介
+
+Humanizer-tw 是一個用於去除中文文字中 AI 生成痕跡的工具，針對中文 AI 寫作的獨特問題：時代開場白、連接詞濫用、互聯網黑話、翻譯腔、書面語過重、公式化結構、結尾套話。
+
+本專案適用於：
+- 編輯和審閱 AI 生成的中文內容
+- 讓文字更像台灣人寫的
+- 學習識別中文 AI 寫作的常見模式
+
+## 安裝
+
+### 方法一：透過 npx 一鍵安裝（推薦）
 
 ```bash
-mkdir -p ~/.claude/skills
-git clone https://github.com/blader/humanizer.git ~/.claude/skills/humanizer
+npx skills add https://github.com/YOUR_USERNAME/humanizer-tw.git
 ```
 
-### Manual install/update (only the skill file)
+這是最簡單的安裝方式，會自動將技能安裝到正確的目錄。
 
-If you already have this repo cloned (or you downloaded `SKILL.md`), copy the skill file into Claude Code’s skills directory:
+### 方法二：透過 Git 克隆
 
 ```bash
-mkdir -p ~/.claude/skills/humanizer
-cp SKILL.md ~/.claude/skills/humanizer/
+# 克隆到 Claude Code 的 skills 目錄
+git clone https://github.com/YOUR_USERNAME/humanizer-tw.git ~/.claude/skills/humanizer-tw
 ```
 
-## Usage
+### 方法三：手動安裝
 
-In Claude Code, invoke the skill:
+1. 下載本專案的 ZIP 檔案或克隆到本地
+2. 將 `Humanizer-tw` 資料夾複製到 Claude Code 的 skills 目錄：
+   - **macOS/Linux**: `~/.claude/skills/`
+   - **Windows**: `%USERPROFILE%\.claude\skills\`
+
+3. 確保資料夾結構如下：
+   ```
+   ~/.claude/skills/humanizer-tw/
+   ├── SKILL.md       # 技能定義檔案（中文版）
+   └── README.md      # 說明文件
+   ```
+
+### 驗證安裝
+
+重啟 Claude Code 或重新載入 skills 後，在對話中輸入：
 
 ```
-/humanizer
-
-[paste your text here]
+/humanizer-tw
 ```
 
-Or ask Claude to humanize text directly:
+如果安裝成功，該技能將被啟用。
+
+## 使用
+
+### 基礎用法
+
+在 Claude Code 中，你可以透過以下方式使用 Humanizer：
+
+#### 1. 直接呼叫技能
 
 ```
-Please humanize this text: [your text]
+/humanizer-tw 請幫我人性化以下文字：
+
+[貼上你的 AI 生成文字]
 ```
 
-## Overview
+#### 2. 在對話中使用
 
-Based on [Wikipedia's "Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) guide, maintained by WikiProject AI Cleanup. This comprehensive guide comes from observations of thousands of instances of AI-generated text.
+```
+請用 humanizer 幫我改寫這段話，讓它更自然：
 
-### Key Insight from Wikipedia
+這個專案作為我們團隊致力於創新的證明。此外，它展示了我們在不斷演變的技術格局中的關鍵作用。
+```
 
-> "LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases."
+#### 3. 處理檔案內容
 
-## 24 Patterns Detected (with Before/After Examples)
+```
+/humanizer-tw 請人性化 article.md 檔案中的內容
+```
 
-### Content Patterns
+### 使用場景示例
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 1 | **Significance inflation** | "marking a pivotal moment in the evolution of..." | "was established in 1989 to collect regional statistics" |
-| 2 | **Notability name-dropping** | "cited in NYT, BBC, FT, and The Hindu" | "In a 2024 NYT interview, she argued..." |
-| 3 | **Superficial -ing analyses** | "symbolizing... reflecting... showcasing..." | Remove or expand with actual sources |
-| 4 | **Promotional language** | "nestled within the breathtaking region" | "is a town in the Gonder region" |
-| 5 | **Vague attributions** | "Experts believe it plays a crucial role" | "according to a 2019 survey by..." |
-| 6 | **Formulaic challenges** | "Despite challenges... continues to thrive" | Specific facts about actual challenges |
+#### 場景 1：改寫互聯網黑話
 
-### Language Patterns
+**輸入：**
+```
+/humanizer-tw
+我們聚焦用戶痛點，通過深耕垂直賽道，打通上下游產業鏈，實現了業務閉環。這一舉措不僅賦能了合作夥伴，更為整個生態圈注入了新的活力。
+```
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 7 | **AI vocabulary** | "Additionally... testament... landscape... showcasing" | "also... remain common" |
-| 8 | **Copula avoidance** | "serves as... features... boasts" | "is... has" |
-| 9 | **Negative parallelisms** | "It's not just X, it's Y" | State the point directly |
-| 10 | **Rule of three** | "innovation, inspiration, and insights" | Use natural number of items |
-| 11 | **Synonym cycling** | "protagonist... main character... central figure... hero" | "protagonist" (repeat when clearest) |
-| 12 | **False ranges** | "from the Big Bang to dark matter" | List topics directly |
+**輸出示例：**
+> 我們專注解決用戶問題，在這個領域做了三年。把供應商和客戶都串起來了，從頭到尾都能自己做。合作夥伴也跟著賺錢。
 
-### Style Patterns
+#### 場景 2：改寫時代開場
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 13 | **Em dash overuse** | "institutions—not the people—yet this continues—" | Use commas or periods |
-| 14 | **Boldface overuse** | "**OKRs**, **KPIs**, **BMC**" | "OKRs, KPIs, BMC" |
-| 15 | **Inline-header lists** | "**Performance:** Performance improved" | Convert to prose |
-| 16 | **Title Case Headings** | "Strategic Negotiations And Partnerships" | "Strategic negotiations and partnerships" |
-| 17 | **Emojis** | "🚀 Launch Phase: 💡 Key Insight:" | Remove emojis |
-| 18 | **Curly quotes** | "said "the project"" | "said \"the project\"" |
+**輸入：**
+```
+/humanizer-tw
+隨著人工智慧技術的快速發展，越來越多的企業開始採用 AI 解決方案。此外，這些解決方案不僅提高了效率，更為企業帶來了新的商業機會。
+```
 
-### Communication Patterns
+**輸出示例：**
+> 現在很多公司在用 AI。效率提高了，新的賺錢方式也多了。
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 19 | **Chatbot artifacts** | "I hope this helps! Let me know if..." | Remove entirely |
-| 20 | **Cutoff disclaimers** | "While details are limited in available sources..." | Find sources or remove |
-| 21 | **Sycophantic tone** | "Great question! You're absolutely right!" | Respond directly |
+#### 場景 3：改寫公式化結尾
 
-### Filler and Hedging
+**輸入：**
+```
+/humanizer-tw
+讓我們拭目以待，相信在大家的共同努力下，這個專案一定能夠取得成功。未來可期，讓我們攜手共進，為公司的發展貢獻自己的力量！
+```
 
-| # | Pattern | Before | After |
-|---|---------|--------|-------|
-| 22 | **Filler phrases** | "In order to", "Due to the fact that" | "To", "Because" |
-| 23 | **Excessive hedging** | "could potentially possibly" | "may" |
-| 24 | **Generic conclusions** | "The future looks bright" | Specific plans or facts |
+**輸出示例：**
+> 專案下個月上線，目標是日活 5000。
 
-## Full Example
+## 檢測的中文 AI 寫作問題
 
-**Before (AI-sounding):**
-> The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.
+本工具針對 **8 大類 19 種** 中文 AI 寫作問題：
 
-**After (Humanized):**
-> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.
+### 📝 開場白與連接詞（3種）
+1. 時代開場白（「隨著...的發展」）
+2. 共識開場白（「眾所周知」「不言而喻」）
+3. 連接詞濫用（「此外」「首先...其次...最後」）
 
-## References
+### 💼 互聯網黑話（2種）
+4. 商業術語（「賦能」「痛點」「閉環」「賽道」）
+5. 動詞術語（「彰顯」「見證了」「標誌著」）
 
-- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - Primary source
-- [WikiProject AI Cleanup](https://en.wikipedia.org/wiki/Wikipedia:WikiProject_AI_Cleanup) - Maintaining organization
+### 🔄 翻譯腔（3種）
+6. 「這是一個...的事情」結構
+7. 「的」字堆疊
+8. 被動語態過度使用
 
-## Version History
+### 📜 書面語過重（2種）
+9. 書面代詞（「其」「該」「此」「予以」）
+10. 介詞結構（「對於...而言」「鑑於...的情況」）
 
-- **2.1.0** - Added before/after examples for all 24 patterns
-- **2.0.0** - Complete rewrite based on raw Wikipedia article content
-- **1.0.0** - Initial release
+### 📐 公式化結構（2種）
+11. 開頭-中間-結尾公式
+12. 否定式排比（「不僅...更是」）
 
-## License
+### 🎬 結尾套話（2種）
+13. 展望類結尾（「讓我們拭目以待」）
+14. 反思類結尾（「這是一個值得思考的問題」）
 
-MIT
+### 🗣️ 語氣問題（3種）
+15. 過度正式
+16. 缺乏個人觀點
+17. 絕對詞過度使用
+
+### 🎵 節奏問題（2種）
+18. 句子長度單一
+19. 過渡詞依賴
+
+## 檔案說明
+
+```
+humanizer-tw/
+├── SKILL.md                    # 技能定義檔（主要內容）
+├── README.md                   # 本說明文件
+└── references/
+    ├── phrases.md              # 中文 AI 高頻短語詳表
+    ├── structures.md           # 中文 AI 結構問題詳表
+    └── examples.md             # 改寫範例（12 個完整範例）
+```
+
+**注：** 本專案針對中文 AI 寫作設計，不是英文版的直接翻譯
+
+## 手動使用方法
+
+### 基本流程
+
+1. **識別 AI 模式** - 對照 `SKILL.md` 中列出的 24 種模式掃描文字
+2. **重寫問題片段** - 用自然的表達替換 AI 痕跡
+3. **保留核心含義** - 確保資訊完整性
+4. **維持適當語調** - 匹配文字應有的風格
+5. **注入真實個性** - 讓文字有"人味"
+
+### 關鍵原則
+
+#### ✨ 不僅要"乾淨"，更要"鮮活"
+
+避免 AI 模式只是基礎，好的寫作需要真實的人類聲音：
+
+- **有觀點** - 不要只報告事實，要對它們做出反應
+- **變化節奏** - 混合使用長短句
+- **承認複雜性** - 真實的人有複雜感受
+- **適當使用"我"** - 第一人稱是誠實的表現
+- **允許一些混亂** - 完美的結構反而顯得機械
+- **對感受要具體** - 用具體細節替代抽象概括
+
+#### 示例對比
+
+**改寫前（AI 味道）：**
+> 隨著數位轉型浪潮的持續推進，企業對於數據分析能力的需求日益增長。該平台不僅整合了多種數據來源，更提供了直觀的視覺化介面。此外，平台還具備強大的機器學習功能。讓我們攜手共創美好未來！
+
+**改寫後（人性化）：**
+> 公司都在搞數據，分析工具不好用。我們做了一個新平台：接各種資料來源、圖表好看、還有 ML 自動找規律。上週給三家客戶試用，兩家說比現在用的好。
+
+**變化：**
+- 刪除「隨著...的發展」時代開場
+- 刪除「此外」連接詞
+- 刪除「不僅...更」否定式排比
+- 刪除「攜手共創美好未來」結尾套話
+- 加入具體試用數據
+
+## 常見中文 AI 詞彙警示列表
+
+以下詞彙在中文 AI 生成文字中出現頻率異常高：
+
+**開場白：** 隨著...的發展、眾所周知、不言而喻、當今時代
+
+**連接詞：** 此外、與此同時、不僅如此、首先...其次...最後、總的來說
+
+**互聯網黑話：** 賦能、痛點、抓手、閉環、賽道、深耕、沉澱、發力、助力、聚焦
+
+**書面語：** 其、該、此、予以、對於...而言、鑑於
+
+**結尾套話：** 讓我們拭目以待、未來可期、攜手共進、貢獻力量
+
+## 貢獻
+
+如果你發現翻譯問題或想要改進文件，歡迎提交 Issue 或 Pull Request。
+
+### 中文 AI 寫作的獨特問題
+
+本專案針對中文 AI 寫作的獨特問題設計，不是英文版的翻譯：
+- **互聯網黑話**：賦能、痛點、閉環等中國互聯網特有術語
+- **翻譯腔**：「這是一個...的事情」、「的」字堆疊、被動語態
+- **書面語過重**：其、該、此、予以等過於正式的詞彙
+- **時代開場白**：「隨著...的發展」等中文 AI 特有開場
+- **結尾套話**：「讓我們拭目以待」「攜手共進」等
+
+## 參考資源
+
+- [blader/humanizer](https://github.com/blader/humanizer) - 原始英文版專案
+- [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) - 實用工具部分
+- [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - AI 寫作特徵指南
+
+## 許可
+
+本翻譯專案遵循原專案的許可協議。核心內容基於維基百科社群的觀察和總結。
+
+---
+
+**提示：** 這個工具不是為了"欺騙" AI 檢測器，而是為了真正提升寫作品質。最好的"去 AI 化"方法是讓文字有真實的人類思考和聲音。
