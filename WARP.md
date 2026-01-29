@@ -1,53 +1,64 @@
 # WARP.md
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+本檔案為 WARP (warp.dev) 在此專案中工作時的指引。
 
-## What this repo is
-This repository is a **Claude Code skill** implemented entirely as Markdown.
+## 這個 repo 是什麼
 
-The “runtime” artifact is `SKILL.md`: Claude Code reads the YAML frontmatter (metadata + allowed tools) and the prompt/instructions that follow.
+這是一個完全以 Markdown 實作的 **Claude Code skill**。
 
-`README.md` is for humans: installation, usage, and a compact overview of the patterns.
+「執行時」產物是 `SKILL.md`：Claude Code 讀取 YAML frontmatter（metadata + allowed tools）和後續的 prompt/instructions。
 
-## Key files (and how they relate)
+`README.md` 是給人類看的：安裝、使用說明，以及 patterns 的精簡概覽。
+
+## 關鍵檔案（及其關係）
 - `SKILL.md`
-  - The actual skill definition.
-  - Starts with YAML frontmatter (`---` … `---`) containing `name`, `version`, `description`, and `allowed-tools`.
-  - After the frontmatter is the editor prompt: the canonical, detailed pattern list with examples.
+  - 實際的 skill 定義。
+  - 以 YAML frontmatter（`---` … `---`）開始，包含 `name`、`version`、`description`、`allowed-tools` 和 `metadata`。
+  - frontmatter 之後是編輯器 prompt：詳細的 pattern 列表與範例。
 - `README.md`
-  - Installation and usage instructions.
-  - Contains a summarized “24 patterns” table and a short version history.
+  - 安裝和使用說明。
+  - 包含「19 種中文 AI 寫作問題」摘要表。
+- `references/`
+  - `phrases.md` - 中文 AI 高頻短語詳表
+  - `structures.md` - 中文 AI 結構問題詳表
+  - `examples.md` - 改寫範例
 
-When changing behavior/content, treat `SKILL.md` as the source of truth, and update `README.md` to stay consistent.
+當變更行為/內容時，以 `SKILL.md` 為 source of truth，並更新 `README.md` 保持一致。
 
-## Common commands
-### Install the skill into Claude Code
-Recommended (clone directly into Claude Code skills directory):
+## 常用指令
+
+### 安裝 skill 到 Claude Code
+
+> 專案名稱 `humanizer.TW`，技能名稱 `humanizer-tw`。目錄名稱不影響觸發。
+
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/blader/humanizer.git ~/.claude/skills/humanizer
+git clone https://github.com/yelban/humanizer.TW.git ~/.claude/skills/humanizer-tw
+# 或
+git clone https://github.com/yelban/humanizer.TW.git ~/.claude/skills/humanizer.TW
 ```
 
-Manual install/update (only the skill file):
+手動安裝/更新：
 ```bash
-mkdir -p ~/.claude/skills/humanizer
-cp SKILL.md ~/.claude/skills/humanizer/
+mkdir -p ~/.claude/skills/humanizer-tw
+cp -r SKILL.md references/ ~/.claude/skills/humanizer-tw/
 ```
 
-## How to “run” it (Claude Code)
-Invoke the skill:
-- `/humanizer` then paste text
+## 如何「執行」（Claude Code）
+呼叫 skill：
+- `/humanizer-tw` 然後貼上文字
 
-## Making changes safely
-### Versioning (keep in sync)
-- `SKILL.md` has a `version:` field in its YAML frontmatter.
-- `README.md` has a “Version History” section.
+## 安全地進行變更
 
-If you bump the version, update both.
+### 版本號（保持同步）
+- `SKILL.md` 的 YAML frontmatter 有 `version:` 欄位。
+- `README.md` 有「Version History」區段。
 
-### Editing `SKILL.md`
-- Preserve valid YAML frontmatter formatting and indentation.
-- Keep the pattern numbering stable unless you’re intentionally re-numbering (since the README table and examples reference the same numbering).
+如果你 bump 版本號，兩者都要更新。
 
-### Documenting non-obvious fixes
-If you change the prompt to handle a tricky failure mode (e.g., a repeated mis-edit or an unexpected tone shift), add a short note to `README.md`’s version history describing what was fixed and why.
+### 編輯 `SKILL.md`
+- 保持 YAML frontmatter 格式和縮排正確。
+- 保持 pattern 編號穩定，除非你是刻意重新編號（因為 README 表格和範例參照相同編號）。
+
+### 記錄非顯而易見的修復
+如果你變更 prompt 來處理棘手的失敗情境（例如重複的錯誤編輯或意外的語氣轉變），在 `README.md` 的 version history 加一個簡短說明，描述修復了什麼以及為什麼。

@@ -18,38 +18,50 @@ Humanizer-tw 是一個用於去除中文文字中 AI 生成痕跡的工具，針
 
 ## 安裝
 
-### 方法一：透過 npx 一鍵安裝（推薦）
+> **說明：** 專案名稱是 `humanizer.TW`，技能名稱是 `humanizer-tw`。
+> 目錄名稱不影響觸發——Claude Code 讀取 SKILL.md 內的 `name:` 欄位決定觸發詞。
+
+### 方法一：npx skills 安裝（推薦）
 
 ```bash
-npx skills add https://github.com/YOUR_USERNAME/humanizer-tw.git
+npx skills add yelban/humanizer.TW
 ```
 
-這是最簡單的安裝方式，會自動將技能安裝到正確的目錄。
-
-### 方法二：透過 Git 克隆
+### 方法二：Git 克隆
 
 ```bash
-# 克隆到 Claude Code 的 skills 目錄
-git clone https://github.com/YOUR_USERNAME/humanizer-tw.git ~/.claude/skills/humanizer-tw
+git clone https://github.com/yelban/humanizer.TW.git ~/.claude/skills/humanizer-tw
 ```
+
+或直接用預設目錄名：
+
+```bash
+git clone https://github.com/yelban/humanizer.TW.git ~/.claude/skills/humanizer.TW
+```
+
+兩種都能用 `/humanizer-tw` 觸發。
 
 ### 方法三：手動安裝
 
-1. 下載本專案的 ZIP 檔案或克隆到本地
-2. 將 `Humanizer-tw` 資料夾複製到 Claude Code 的 skills 目錄：
+1. 下載本專案的 ZIP 檔案
+2. 解壓縮到 Claude Code 的 skills 目錄：
    - **macOS/Linux**: `~/.claude/skills/`
    - **Windows**: `%USERPROFILE%\.claude\skills\`
 
-3. 確保資料夾結構如下：
+3. 確保包含 SKILL.md：
    ```
-   ~/.claude/skills/humanizer-tw/
-   ├── SKILL.md       # 技能定義檔案（中文版）
-   └── README.md      # 說明文件
+   ~/.claude/skills/humanizer-tw/   # 或 humanizer.TW/
+   ├── SKILL.md                     # 技能定義（必要）
+   ├── README.md
+   └── references/
+       ├── phrases.md
+       ├── structures.md
+       └── examples.md
    ```
 
 ### 驗證安裝
 
-重啟 Claude Code 或重新載入 skills 後，在對話中輸入：
+重啟 Claude Code 後輸入：
 
 ```
 /humanizer-tw
@@ -162,7 +174,7 @@ git clone https://github.com/YOUR_USERNAME/humanizer-tw.git ~/.claude/skills/hum
 ## 檔案說明
 
 ```
-humanizer-tw/
+humanizer.TW/
 ├── SKILL.md                    # 技能定義檔（主要內容）
 ├── README.md                   # 本說明文件
 └── references/
